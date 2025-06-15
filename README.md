@@ -1,5 +1,7 @@
 # RandomSearch
 
+[![Elixir CI](https://github.com/alekpopovic/random_search/actions/workflows/elixir.yml/badge.svg)](https://github.com/alekpopovic/random_search/actions/workflows/elixir.yml)
+
 ## Pseudocode for Random Search
 
 ```elixir
