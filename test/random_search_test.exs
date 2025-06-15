@@ -51,7 +51,6 @@ defmodule RandomSearchTest do
       vector1 = RandomSearch.random_vector(minmax)
       vector2 = RandomSearch.random_vector(minmax)
 
-      # With high probability, these should be different
       assert vector1 != vector2
     end
   end
@@ -66,21 +65,18 @@ defmodule RandomSearchTest do
       assert Map.has_key?(result, :cost)
       assert length(result.vector) == 2
       assert is_number(result.cost)
-      assert result.cost >= 0  # sum of squares is always non-negative
+      assert result.cost >= 0
     end
 
     test "improves solution over iterations" do
       search_space = [[-10, 10], [-10, 10]]
 
-      # Capture IO to avoid cluttering test output
       result = ExUnit.CaptureIO.capture_io(fn ->
         RandomSearch.search(search_space, 100)
       end)
 
-      # The actual search result should be reasonable for this problem
-      # (finding minimum of sum of squares, which is 0 at origin)
       search_result = RandomSearch.search(search_space, 100)
-      assert search_result.cost < 200  # Should find something reasonable
+      assert search_result.cost < 200
     end
 
     test "handles single iteration" do
@@ -105,24 +101,18 @@ defmodule RandomSearchTest do
 
   describe "integration test" do
     test "complete search workflow" do
-      # Set up a simple 2D search space
       search_space = [[-2, 2], [-2, 2]]
 
-      # Capture output to avoid cluttering test results
       result = ExUnit.CaptureIO.capture_io(fn ->
         RandomSearch.search(search_space, 50)
       end)
 
-      # Verify the search completes and finds a reasonable solution
       search_result = RandomSearch.search(search_space, 50)
 
       assert is_map(search_result)
       assert length(search_result.vector) == 2
       assert search_result.cost >= 0
-
-      # For sum of squares, the global minimum is 0 at [0, 0]
-      # With 50 iterations, we should find something reasonably close
-      assert search_result.cost < 16  # Should be better than corners
+      assert search_result.cost < 16
     end
   end
 end
